@@ -45,12 +45,14 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         disabled={currentPage === 1}
         style={{
           padding: '8px 16px',
-          backgroundColor: currentPage === 1 ? '#D9D9D9' : '#F8F8F7',
-          border: '1px solid #D9D9D9',
-          borderRadius: '6px',
+          backgroundColor: currentPage === 1 ? 'var(--border-light)' : 'var(--cream-dark)',
+          border: '1px solid var(--border-light)',
+          borderRadius: '100px',
           cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
           fontWeight: 600,
-          color: currentPage === 1 ? '#999999' : '#2D2D2D',
+          color: currentPage === 1 ? 'var(--text-light)' : 'var(--ink)',
+          fontFamily: 'inherit',
+          transition: 'all 0.2s ease',
         }}
       >
         ← Previous
@@ -66,16 +68,18 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
               padding: '8px 12px',
               backgroundColor:
                 page === currentPage
-                  ? '#B8C5B5'
+                  ? 'var(--rust)'
                   : page === '...'
                   ? 'transparent'
-                  : '#F8F8F7',
-              border: page === currentPage ? 'none' : '1px solid #D9D9D9',
-              borderRadius: '6px',
+                  : 'var(--cream-dark)',
+              border: page === currentPage ? 'none' : '1px solid var(--border-light)',
+              borderRadius: '100px',
               cursor: page === '...' ? 'default' : 'pointer',
               fontWeight: page === currentPage ? 700 : 600,
-              color: page === currentPage ? 'white' : '#2D2D2D',
+              color: page === currentPage ? 'white' : 'var(--ink)',
               minWidth: '40px',
+              fontFamily: 'inherit',
+              transition: 'all 0.2s ease',
             }}
           >
             {page}
@@ -88,12 +92,14 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         disabled={currentPage === totalPages}
         style={{
           padding: '8px 16px',
-          backgroundColor: currentPage === totalPages ? '#D9D9D9' : '#F8F8F7',
-          border: '1px solid #D9D9D9',
-          borderRadius: '6px',
+          backgroundColor: currentPage === totalPages ? 'var(--border-light)' : 'var(--cream-dark)',
+          border: '1px solid var(--border-light)',
+          borderRadius: '100px',
           cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
           fontWeight: 600,
-          color: currentPage === totalPages ? '#999999' : '#2D2D2D',
+          color: currentPage === totalPages ? 'var(--text-light)' : 'var(--ink)',
+          fontFamily: 'inherit',
+          transition: 'all 0.2s ease',
         }}
       >
         Next →

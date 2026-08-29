@@ -64,25 +64,19 @@ export default function SearchAutocomplete({ onClose }) {
           style={{
             flex: 1,
             padding: '12px 16px',
-            border: '1px solid #D9D9D9',
-            borderRadius: '6px',
+            border: '1px solid var(--border-light)',
+            borderRadius: '100px',
             fontSize: '14px',
             outline: 'none',
+            fontFamily: 'inherit',
+            color: 'var(--ink)',
+            background: 'var(--cream-dark)',
           }}
         />
         <button
           type="submit"
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#B8C5B5',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            textTransform: 'uppercase',
-            fontSize: '14px',
-          }}
+          className="btn btn-primary"
+          style={{ padding: '0 28px' }}
         >
           Search
         </button>
@@ -96,9 +90,9 @@ export default function SearchAutocomplete({ onClose }) {
             left: 0,
             right: 0,
             backgroundColor: 'white',
-            border: '1px solid #D9D9D9',
-            borderRadius: '6px',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
+            border: '1px solid var(--border-light)',
+            borderRadius: '14px',
+            boxShadow: '0 10px 28px rgba(43,33,24,0.12)',
             zIndex: 100,
             overflow: 'hidden',
           }}
@@ -113,10 +107,10 @@ export default function SearchAutocomplete({ onClose }) {
                 gap: '12px',
                 padding: '12px',
                 cursor: 'pointer',
-                borderBottom: '1px solid #F0F0F0',
+                borderBottom: '1px solid var(--border-light)',
                 transition: 'background 0.2s ease',
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F8F8F7'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--cream-dark)'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'white'}
             >
               <img
@@ -126,14 +120,14 @@ export default function SearchAutocomplete({ onClose }) {
                   width: '48px',
                   height: '48px',
                   objectFit: 'cover',
-                  borderRadius: '4px',
+                  borderRadius: '8px',
                 }}
               />
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '14px', fontWeight: 600, color: '#2D2D2D' }}>
+                <p style={{ fontSize: '14px', fontWeight: 600, color: 'var(--ink)' }}>
                   {product.name}
                 </p>
-                <p style={{ fontSize: '12px', color: '#999999' }}>
+                <p style={{ fontSize: '12px', color: 'var(--text-light)', fontFamily: 'IBM Plex Mono, monospace' }}>
                   ${product.price.toFixed(2)}
                 </p>
               </div>

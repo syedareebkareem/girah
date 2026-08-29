@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
   const [imgError, setImgError] = useState(false)
-  const [wishlisted, setWishlisted] = useState(false)
+  const wishlisted = isInWishlist(product.id)
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -36,7 +38,7 @@ export default function ProductCard({ product }) {
 
       <button
         className="product-wishlist"
-        onClick={(e) => { e.preventDefault(); setWishlisted(!wishlisted) }}
+        onClick={(e) => { e.preventDefault(); toggleWishlist(product) }}
         style={{ position: 'absolute', marginTop: '-232px', marginLeft: '12px', color: wishlisted ? 'var(--rust)' : 'var(--ink)' }}
       >
         {wishlisted ? '♥' : '♡'}

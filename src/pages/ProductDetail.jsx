@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import { PRODUCTS } from '../data/products'
 import ImageGallery from '../components/products/ImageGallery'
 import Breadcrumbs from '../components/common/Breadcrumbs'
@@ -12,8 +13,8 @@ export default function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addToCart } = useCart()
+  const { toggleWishlist, isInWishlist } = useWishlist()
   const [quantity, setQuantity] = useState(1)
-  const [wishlisted, setWishlisted] = useState(false)
 
   const product = PRODUCTS.find(p => p.id === parseInt(id))
 
@@ -26,6 +27,7 @@ export default function ProductDetail() {
     )
   }
 
+  const wishlisted = isInWishlist(product.id)
   const images = [product.image, product.image, product.image, product.image]
   const relatedProducts = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
 
@@ -76,7 +78,7 @@ export default function ProductDetail() {
             </button>
             <button
               className={`wishlist-lg ${wishlisted ? 'active' : ''}`}
-              onClick={() => setWishlisted(!wishlisted)}
+              onClick={() => toggleWishlist(product)}
               aria-label="Toggle wishlist"
             >
               {wishlisted ? '♥' : '♡'}
