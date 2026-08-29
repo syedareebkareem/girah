@@ -50,50 +50,47 @@ crochet-shop/
 ├── context.md                  # <-- this file
 └── src/
     ├── main.jsx                # entry; mounts App, imports globals.css + index.css
-    ├── App.jsx                 # providers + Router + routes (+ lazy code-split pages)
-    ├── App.css                 # DEAD — unused, nothing imports it (beautify candidate)
+    ├── App.jsx                 # providers (Cart→Order→Search→Wishlist→Review) + Router + static routes
     ├── index.css               # GLOBAL STYLE SHEET — most visual rules
     ├── styles/globals.css      # Tailwind directives + base body + scrollbar + toast class
-    ├── asset/hero.png, react.svg, vite.svg
     ├── data/products.js        # PRODUCTS[] (12) + CATEGORIES[] (5) — static catalog
     ├── utils/validation.js     # zod checkoutSchema
     ├── context/
     │   ├── CartContext.jsx     # cart items + toast notifications
-    │   ├── OrderContext.jsx    # placed orders history
+    │   ├── OrderContext.jsx    # placed orders history (orders, createOrder)
     │   ├── SearchContext.jsx   # search query + results
-    │   ├── FilterContext.jsx   # (unused) filter state — NOT wired into App
-    │   ├── WishlistContext.jsx # wishlist items
+    │   ├── WishlistContext.jsx # wishlist items (persisted)
     │   └── ReviewContext.jsx   # per-product user reviews
     ├── components/
     │   ├── cart/CartSidebar.jsx    # slide-in cart drawer from header
-    │   ├── common/Header.jsx       # sticky header: logo, nav, icons
-    │   ├── common/MobileMenu.jsx   # slide-in mobile nav drawer
-    │   ├── common/SearchAutocomplete.jsx # header search with live suggestions
+    │   ├── common/Header.jsx       # sticky header: logo, nav, icons, search panel, mobile nav
+    │   ├── common/SearchAutocomplete.jsx # header search with live suggestions (used by Header)
     │   ├── common/Footer.jsx       # footer (Shop/Help/Newsletter)
     │   ├── common/Toast.jsx        # toast notification (inline styled)
+    │   ├── common/ScrollToTop.jsx  # scrolls to top on route change
     │   ├── common/Breadcrumbs.jsx
     │   ├── common/Pagination.jsx
     │   ├── common/QuantitySelector.jsx
     │   ├── common/ChainDivider.jsx # SVG wave divider — CREATED BUT NOT YET USED (beautify hook)
     │   ├── common/ErrorBoundary.jsx# class-based error catch-all
     │   └── products/
-    │       ├── ProductCard.jsx     # grid card: image, wishlist, quick-view, info, add-to-cart
+    │       ├── ProductCard.jsx     # grid card: image, wishlist, info, add-to-cart
     │       ├── QuickViewModal.jsx  # modal from card hover
     │       ├── ReviewSection.jsx   # rating summary + write-a-review form
     │       ├── ProductFilters.jsx  # sidebar filter controls (category/price/stock)
     │       └── ImageGallery.jsx    # main image + thumbnails + lightbox
     └── pages/
         ├── Home.jsx            # hero, categories, new arrivals, trust section
-        ├── Shop.jsx            # filter + sort + paginate grid
+        ├── Shop.jsx            # filter + sort grid
         ├── ProductDetail.jsx   # gallery, info, add-to-cart, reviews, related
         ├── Cart.jsx            # line items + order summary
         ├── SearchResults.jsx   # results grid from search
+        ├── Wishlist.jsx        # saved items grid
+        ├── Account.jsx         # order history + counts
         ├── About.jsx           # static marketing page
         ├── Contact.jsx         # contact form + info + FAQ
         ├── Checkout.jsx        # 3-step checkout (shipping→payment→review)
         ├── OrderConfirmation.jsx # post-order "success" page
-        ├── Wishlist.jsx        # saved items grid
-        ├── Account.jsx         # order history + counts
         └── NotFound.jsx        # 404
 ```
 
@@ -137,18 +134,17 @@ Providers (outer→inner): `ErrorBoundary → CartProvider → OrderProvider →
 | `/account` | Account |
 | `*` | NotFound |
 
-All pages except Home are lazy-loaded (`React.lazy`) with a `PageLoader` spinner fallback.
+All pages are imported statically (no lazy-loading / code-splitting in the current build). `ScrollToTop` scrolls to top on route change; `<main className="page-fade">` animates page transitions.
 
 ---
 
 ## STATE MANAGEMENT (Contexts)
 
 - **CartContext** (`localStorage: "cart"`) — `cartItems`, `addToCart`, `removeFromCart`, `updateQuantity`, `getTotalPrice`, `getTotalItems`, plus toast state (`showToast`, `toastMessage`, `toastType`, `showToastMessage`). **Note:** toast is owned by CartContext, so any component calling `showToastMessage` must be under CartProvider (it is).
-- **OrderContext** (`localStorage: "orders"`) — `orders`, `currentOrder`, `createOrder`.
+- **OrderContext** (`localStorage: "orders"`) — `orders`, `createOrder`. (`currentOrder` state was removed; order id comes from `createOrder` return value.)
 - **SearchContext** — `searchQuery`, `searchResults`, `performSearch`, `clearSearch` (in-memory, not persisted).
 - **WishlistContext** (`localStorage: "wishlist"`) — `wishlistItems`, `toggleWishlist`, `isInWishlist`, `removeFromWishlist`.
 - **ReviewContext** (`localStorage: "reviews"`) — per-product reviews; `addReview(productId, review)`, `getReviews(productId)`.
-- **FilterContext** — defined but **NOT used** in App.jsx and not referenced by components. Shop.jsx manages filters locally. Dead-ish; beautification could clean it up.
 
 ---
 
@@ -198,7 +194,8 @@ The CSS classes in `index.css` are mainly used by: Header, Footer, Home (hero/se
 - Old `#B8C5B5` (sage) and `#F8F8F7`/`#2D2D2D`/`#999999`/`#D9D9D9` / `#E74C3C` / `#27AE60` / `#F39C12` / `#FFD700` still appear in many component files and **look off-brand** compared to the new cream/rust/pine theme.
 
 **Files still using old hard-coded hex colors (big beautification targets):**
-- `Checkout.jsx`, `Cart.jsx`, `Contact.jsx`, `About.jsx`, `Account.jsx`, `OrderConfirmation.jsx`, `Wishlist.jsx`, `NotFound.jsx`, `SearchResults.jsx`, `ProductDetail.jsx` (buttons/stock pill), `ImageGallery.jsx`, `ProductFilters.jsx`, `CartSidebar.jsx`, `MobileMenu.jsx`, `SearchAutocomplete.jsx`, `QuickViewModal.jsx`, `ReviewSection.jsx`, `ErrorBoundary.jsx`, `Pagination.jsx`, `QuantitySelector.jsx`, `Breadcrumbs.jsx`, `App.jsx` (PageLoader spinner).
+- `Checkout.jsx`, `Cart.jsx`, `Contact.jsx`, `About.jsx`, `OrderConfirmation.jsx`, `NotFound.jsx`, `ImageGallery.jsx`, `ProductFilters.jsx`, `CartSidebar.jsx`, `QuickViewModal.jsx`, `ReviewSection.jsx`, `ErrorBoundary.jsx`, `QuantitySelector.jsx`, `Breadcrumbs.jsx`.
+- **Now on the new theme** (restyled, do not regress): `Account.jsx`, `Wishlist.jsx`, `SearchResults.jsx`, `SearchAutocomplete.jsx`, `Pagination.jsx`, `ProductDetail.jsx`, `ProductCard.jsx`, `Header.jsx`.
 
 **Recommendation for the beautify pass:** consolidate these inline hex values to the CSS variables (e.g. `var(--rust)`, `var(--ink)`, `var(--cream-dark)`, `var(--mustard)`) or give components class hooks, so future theming is centralized.
 
@@ -215,13 +212,13 @@ The CSS classes in `index.css` are mainly used by: Header, Footer, Home (hero/se
 1. **Old palette bleeding**: many components (see inline-style hazard) still use pre-redesign hex colors — inconsistent with new theme. Highest-value beautify work.
 2. **`OrderConfirmation.jsx`** has a bug: `useEffect` calls `window.location.reload()` after clearing localStorage cart — it forces a full page reload on mount every time. Also destructures `cartItems` from `useCart` unused (lint warns). Should be refactored to clear cart without reloading.
 3. **`Shop.jsx` uses `window.innerWidth` during render** (line 93) to toggle mobile filters — SSR/asterisk anti-pattern, causes lint warning; better to toggle with CSS `@media` or the `.mobile-filter-toggle` class (its button is `display:none` and never becomes visible — the mobile filter toggle is effectively broken).
-4. **`FilterContext.jsx` is dead code** — not mounted, not used. Clean up or wire in.
+4. **All products use the same image** (`/images/products/blanket-1.jpg`) — every product/category shows identical photography. If more local images are added later, wire them into `products.js`.
 5. **`SearchAutocomplete.jsx`** uses `onBlur` + `setTimeout` which can leave the dropdown open; minor UX.
-6. **`axios`, `App.css`, `src/assets/*` (react.svg, vite.svg)** are unused leftovers (build doesn't include them; axios is a dead dep).
-7. **`public/images/products/a.jpg`** is committed but not referenced anywhere.
+6. **`axios` dependency is unused** (a dead dep). No API calls exist anywhere.
+7. **`Shop.jsx`** does NOT read the `?category=` query param that Home's category cards link to (`/shop?category=...`), so category cards don't pre-filter the shop.
 8. **Footer/About/Contact links** are mostly `href="#"` placeholders (no real social/FAQ pages). Newsletter subscribe button does nothing (just visually there).
-9. **`ProductDetail.jsx` `♡` wishlist button** on the right of Add-to-Cart is **non-functional** (no onClick) — it does not toggle wishlist, unlike the card's wishlist. Uses old `#B8C5B5`.
-10. **Lint = 11 warnings, 0 errors.** Warnings: `window.innerWidth` in render (Shop), unused `cartItems` (OrderConfirmation), React Compiler memoization notes on `useForm`/`watch`.
+9. **Wishlist is client-side only** (localStorage via `WishlistContext`); hearts on `ProductCard`/`ProductDetail` and the `/wishlist` page all work together.
+10. **Lint = 6 warnings, 0 errors.** Warnings: `window.innerWidth` in render (Shop), unused `cartItems` (OrderConfirmation), React Compiler memoization notes on `useForm`/`watch`, `setState` in effect (SearchAutocomplete).
 11. **Footer** is styled dark (`--ink` bg) but its inner `<h3>/<a>` text colors are still hard-coded `#2D2D2D`/`#999999` from the old theme — text may be low-contrast on the dark footer. Verify visually.
 12. **`globals.css` `.toast.*` classes are effectively unused** — `Toast.jsx` hard-codes its colors inline (already updated to new palette). Can consolidate.
 
@@ -233,19 +230,21 @@ The CSS classes in `index.css` are mainly used by: Header, Footer, Home (hero/se
 2. **Introduce design-system components** so pages stop hand-rolling: a shared `Button`, `Input`, `Card`, `Section`, `PageHeader` — pull from `.btn`/`.card`/`.product-card` patterns.
 3. **Deploy `.yarn-tag`** and **`ChainDivider`** on Home/About for brand flavor.
 4. **Fix mobile filter toggle** in Shop (currently hidden/broken).
-5. **Refactor OrderConfirmation reload bug** and wire the `♡` button on ProductDetail.
-6. **Clean dead code**: FilterContext, axios, App.css, unused assets.
-7. **Brand interior pages** (Checkout/Cart/Contact/About/Account/OrderConfirmation/NotFound) to match the new artisan theme.
+5. **Refactor OrderConfirmation reload bug** (see gap #2).
+6. **Remove the unused `axios` dep** and any other dead deps.
+7. **Brand interior pages** (Checkout/Cart/Contact/About/OrderConfirmation/NotFound) to match the new artisan theme — Account/Wishlist/SearchResults already done.
 
 ---
 
 ## QUICK FILE-ROLE CHEAT SHEET
 
-- **`App.jsx`** — providers + router + lazy pages. Don't break the provider nesting or localStorage-backed contexts.
-- **`Header.jsx`** — desktop nav + icon buttons (search toggle, account, wishlist w/ badge, cart w/ badge) + mobile menu drawer + search panel.
-- **`ProductCard.jsx`** — the reusable product tile (uses `.product-card` classes + inline for wishlist/quick-view).
-- **`Shop.jsx`** — local filter/sort/pagination logic (does NOT use FilterContext).
+- **`App.jsx`** — providers (Cart→Order→Search→Wishlist→Review) + router (statically imported routes). Don't break the provider nesting or localStorage-backed contexts.
+- **`Header.jsx`** — desktop nav + icon buttons (search toggle→SearchAutocomplete panel, account, wishlist w/ badge, cart w/ badge) + inline mobile nav panel + cart sidebar.
+- **`ProductCard.jsx`** — the reusable product tile (uses `.product-card` classes; wishlist heart wired to `WishlistContext`).
+- **`Shop.jsx`** — local filter/sort logic (no central filter context).
 - **`ProductDetail.jsx`** — gallery + info + reviews + related. Note `images = [product.image × 4]` (same image 4x, no real gallery).
+- **`SearchResults.jsx`** — reads `useSearch()` query/results; paginated grid.
+- **`Wishlist.jsx`** / **`Account.jsx`** — consume `WishlistContext` / `OrderContext` respectively.
 - **`Checkout.jsx`** — 3-step form, react-hook-form + zod, shipping cost watch, creates order on step 3.
 - **`OrderConfirmation.jsx`** — reads order by `:orderId`, clears cart with a reload bug (see gaps).
 - **`CartContext.jsx`** — distinct from everything else: also owns toast.
@@ -254,7 +253,14 @@ The CSS classes in `index.css` are mainly used by: Header, Footer, Home (hero/se
 
 # FULL SOURCE CODE — EVERY FILE
 
-> All files verbatim and current (commit HEAD, redesign applied). Read-only navigation aid.
+> **IMPORTANT — snapshot accuracy:** These blocs were captured during earlier documentation passes. After the restore/cleanup change, the following are **stale** (show the pre-change version) — read the live files for authoritative code:
+> - `src/App.jsx` (providers Search/Wishlist/Review re-mounted; `/search`, `/wishlist`, `/account` routes re-added; static imports, no lazy loading)
+> - `src/components/common/Header.jsx` (search autocomplete, wishlist link+badge, account link restored; inline mobile nav)
+> - `src/components/common/SearchAutocomplete.jsx` + `Pagination.jsx` (restyled to artisan theme)
+> - `src/components/products/ProductCard.jsx` + `src/pages/ProductDetail.jsx` (wishlist hearts wired to `WishlistContext`)
+> - `src/pages/SearchResults.jsx`, `src/pages/Wishlist.jsx`, `src/pages/Account.jsx` (restyled to artisan theme)
+> - **Deleted files** (kept below only as historical records, labeled DEAD): `App.css`, `common/MobileMenu.jsx`, `context/FilterContext.jsx`, `src/assets/*` (react.svg, vite.svg, hero.png).
+> - Also note the catalog is **12 products**, not 17; `OrderContext` exposes `orders` + `createOrder` (no `currentOrder`).
 
 ---
 
