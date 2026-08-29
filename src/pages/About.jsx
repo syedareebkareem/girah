@@ -1,124 +1,54 @@
 export default function About() {
   return (
-    <div style={{ minHeight: '100vh', paddingTop: '48px', paddingBottom: '64px' }}>
-      <div className="container">
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '48px', fontWeight: 700, marginBottom: '16px', color: '#2D2D2D', textAlign: 'center' }}>
-            About CrochetShop
-          </h1>
+    <div className="section" style={{ maxWidth: '800px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: '42px', fontWeight: 600, color: 'var(--ink)', marginBottom: '12px' }}>
+          Our Story
+        </h1>
+        <p style={{ fontSize: '17px', color: 'var(--text-light)' }}>
+          Handcrafted crochet gifts, made with love
+        </p>
+      </div>
 
-          <p style={{ fontSize: '18px', color: '#999999', textAlign: 'center', marginBottom: '64px' }}>
-            Handmade crochet gifts crafted with love and care
-          </p>
+      <div className="about-block">
+        <h2>Why We Crochet</h2>
+        <p>
+          CrochetShop started with a simple idea: bring handmade, artisan crochet pieces to people
+          who appreciate quality, craftsmanship, and thoughtful gifts. Every stitch is made by hand,
+          not a machine — which means no two pieces are exactly alike.
+        </p>
+        <p>
+          We work with skilled makers using premium yarns, and we believe in slow, sustainable
+          production over mass manufacturing.
+        </p>
+      </div>
 
-          <section style={{ marginBottom: '64px' }}>
-            <h2 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '16px', color: '#2D2D2D' }}>
-              Our Story
-            </h2>
-            <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8', marginBottom: '16px' }}>
-              CrochetShop was founded with a simple mission: to bring handmade, artisan crochet products to people who appreciate quality, craftsmanship, and unique gifts.
-            </p>
-            <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8' }}>
-              Each item is carefully crafted by skilled artisans using premium materials. We believe in supporting sustainable practices and creating pieces that last a lifetime.
-            </p>
-          </section>
-
-          <section style={{ marginBottom: '64px' }}>
-            <h2 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '16px', color: '#2D2D2D' }}>
-              Our Values
-            </h2>
-            <div style={{ display: 'grid', gap: '32px' }}>
-              <div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px', color: '#2D2D2D' }}>
-                  ✓ Quality Craftsmanship
-                </h3>
-                <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8' }}>
-                  Every piece is handmade with attention to detail and quality materials.
-                </p>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px', color: '#2D2D2D' }}>
-                  ✓ Sustainability
-                </h3>
-                <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8' }}>
-                  We use eco-friendly materials and support sustainable practices.
-                </p>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px', color: '#2D2D2D' }}>
-                  ✓ Artisan Support
-                </h3>
-                <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8' }}>
-                  We support independent artisans and fair-trade practices.
-                </p>
-              </div>
-              <div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px', color: '#2D2D2D' }}>
-                  ✓ Customer Satisfaction
-                </h3>
-                <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8' }}>
-                  Your happiness is our priority. We stand behind every product.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section style={{ marginBottom: '64px' }}>
-            <h2 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '16px', color: '#2D2D2D' }}>
-              Production Process
-            </h2>
-            <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.8', marginBottom: '24px' }}>
-              Each product goes through multiple stages of quality control:
-            </p>
-            <div style={{ display: 'grid', gap: '16px' }}>
-              {['Design & Planning', 'Material Selection', 'Handcrafting', 'Quality Check', 'Packaging', 'Delivery'].map((step, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                  <div
-                    style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '50%',
-                      backgroundColor: '#B8C5B5',
-                      color: 'white',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 700,
-                      flexShrink: 0,
-                    }}
-                  >
-                    {idx + 1}
-                  </div>
-                  <span style={{ fontSize: '16px', fontWeight: 600, color: '#2D2D2D' }}>{step}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section style={{ backgroundColor: '#F8F8F7', padding: '48px', borderRadius: '8px', textAlign: 'center' }}>
-            <h2 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '16px', color: '#2D2D2D' }}>
-              Have Questions?
-            </h2>
-            <p style={{ fontSize: '16px', color: '#999999', marginBottom: '24px' }}>
-              Reach out to us anytime. We love hearing from our customers.
-            </p>
-            <a
-              href="/contact"
-              style={{
-                display: 'inline-block',
-                padding: '12px 32px',
-                backgroundColor: '#B8C5B5',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '6px',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-              }}
-            >
-              Contact Us
-            </a>
-          </section>
+      <div className="about-block">
+        <h2>Our Values</h2>
+        <div className="value-grid">
+          <div className="value-item">
+            <span className="yarn-tag">✓ Quality</span>
+            <p>Every piece is handmade with attention to detail and quality materials.</p>
+          </div>
+          <div className="value-item">
+            <span className="yarn-tag">🌿 Sustainable</span>
+            <p>We use eco-friendly materials and support sustainable practices.</p>
+          </div>
+          <div className="value-item">
+            <span className="yarn-tag">🤝 Artisan-Led</span>
+            <p>We support independent makers and fair-trade practices.</p>
+          </div>
+          <div className="value-item">
+            <span className="yarn-tag">💛 Care</span>
+            <p>Your happiness is our priority. We stand behind every product.</p>
+          </div>
         </div>
+      </div>
+
+      <div className="about-cta">
+        <h2>Have Questions?</h2>
+        <p>Reach out anytime — we love hearing from our customers.</p>
+        <a href="/contact" className="btn btn-primary">Contact Us</a>
       </div>
     </div>
   )

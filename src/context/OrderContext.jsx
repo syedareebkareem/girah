@@ -8,8 +8,6 @@ export function OrderProvider({ children }) {
     return saved ? JSON.parse(saved) : []
   })
 
-  const [currentOrder, setCurrentOrder] = useState(null)
-
   const createOrder = (orderData) => {
     const order = {
       id: `ORD-${Date.now()}`,
@@ -21,12 +19,11 @@ export function OrderProvider({ children }) {
       localStorage.setItem('orders', JSON.stringify(updated))
       return updated
     })
-    setCurrentOrder(order)
     return order
   }
 
   return (
-    <OrderContext.Provider value={{ orders, currentOrder, createOrder }}>
+    <OrderContext.Provider value={{ orders, createOrder }}>
       {children}
     </OrderContext.Provider>
   )

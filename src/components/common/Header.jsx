@@ -1,32 +1,28 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
-import { useWishlist } from '../../context/WishlistContext'
 import CartSidebar from '../cart/CartSidebar'
-import MobileMenu from './MobileMenu'
-import SearchAutocomplete from './SearchAutocomplete'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [cartSidebarOpen, setCartSidebarOpen] = useState(false)
-  const [searchOpen, setSearchOpen] = useState(false)
+  const [cartOpen, setCartOpen] = useState(false)
   const { getTotalItems } = useCart()
-  const { wishlistItems } = useWishlist()
+
+  const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
     <>
       <header className="header">
         <div className="header-inner">
           <button
-            className="icon-btn mobile-only"
-            onClick={() => setMobileMenuOpen(true)}
-            style={{ display: 'none' }}
-            title="Menu"
+            className="icon-btn mobile-menu-btn"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
           >
-            ☰
+            {mobileMenuOpen ? '✕' : '☰'}
           </button>
 
-          <Link to="/" style={{ textDecoration: 'none' }}>
+          <Link to="/" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
             <div className="logo">
               Crochet<span className="logo-accent">Shop</span>
             </div>
@@ -40,45 +36,26 @@ export default function Header() {
           </nav>
 
           <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-            <button 
-              className="icon-btn" 
-              onClick={() => setSearchOpen(!searchOpen)}
-              title="Search"
-            >
-              🔍
-            </button>
-            <Link to="/account" style={{ textDecoration: 'none' }}>
-              <button className="icon-btn" title="Account">👤</button>
-            </Link>
-            <Link to="/wishlist" style={{ position: 'relative', textDecoration: 'none' }}>
-              <button className="icon-btn" title="Wishlist">♡</button>
-              {wishlistItems.length > 0 && (
-                <span className="cart-badge">{wishlistItems.length}</span>
-              )}
-            </Link>
-            <button 
-              className="icon-btn" 
-              onClick={() => setCartSidebarOpen(true)}
-              style={{ position: 'relative' }}
-              title="Cart"
-            >
-              🛒
-              {getTotalItems() > 0 && (
-                <span className="cart-badge">{getTotalItems()}</span>
-              )}
+            <button className="icon-btn" style={{ display: 'none' }}>🔍</button>
+            <button className="icon-btn" style={{ display: 'none' }}>🤍</button>
+            <button className="icon-btn" style={{ position: 'relative' }} onClick={() => setCartOpen(true)}>
+              🛍️
+              {getTotalItems() > 0 && <span className="cart-badge">{getTotalItems()}</span>}
             </button>
           </div>
         </div>
 
-        {searchOpen && (
-          <div style={{ padding: '16px', borderTop: '1px solid #D9D9D9', backgroundColor: 'white' }}>
-            <SearchAutocomplete onClose={() => setSearchOpen(false)} />
+        {mobileMenuOpen && (
+          <div className="mobile-nav-panel">
+            <Link to="/" onClick={closeMobileMenu}>Home</Link>
+            <Link to="/shop" onClick={closeMobileMenu}>Shop</Link>
+            <Link to="/about" onClick={closeMobileMenu}>About</Link>
+            <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
           </div>
         )}
       </header>
 
-      <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
-      <CartSidebar isOpen={cartSidebarOpen} onClose={() => setCartSidebarOpen(false)} />
+      <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   )
 }

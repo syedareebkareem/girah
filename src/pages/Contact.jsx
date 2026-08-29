@@ -1,272 +1,99 @@
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { useCart } from '../context/CartContext'
 
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  subject: z.string().min(5, 'Subject must be at least 5 characters'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-})
-
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false)
   const { showToastMessage } = useCart()
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [errors, setErrors] = useState({})
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    resolver: zodResolver(contactSchema),
-    mode: 'onChange',
-  })
+  const update = (field, value) => setForm(prev => ({ ...prev, [field]: value }))
 
-  const onSubmit = (data) => {
-    console.log('Contact form submitted:', data)
-    setSubmitted(true)
-    reset()
-    showToastMessage('Message sent! We will get back to you soon.', 'success')
-    setTimeout(() => setSubmitted(false), 3000)
+  const faqs = [
+    { q: 'How long does it take to receive my order?', a: 'In-stock items ship within 1-2 business days. Made-to-order items take 7-14 days.' },
+    { q: 'Do you offer customizations?', a: 'Yes! Contact us with your specific requirements and we\'ll provide a quote.' },
+    { q: 'What is your return policy?', a: 'We accept returns within 30 days if items are unused. Custom items are non-refundable.' },
+    { q: 'Are your products eco-friendly?', a: 'Yes! We use sustainable materials and eco-conscious packaging whenever possible.' },
+  ]
+  const [openFaq, setOpenFaq] = useState(null)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const e2 = {}
+    if (form.name.trim().length < 2) e2.name = 'Required'
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) e2.email = 'Invalid email'
+    if (form.subject.trim().length < 5) e2.subject = 'Too short'
+    if (form.message.trim().length < 10) e2.message = 'Too short'
+    setErrors(e2)
+    if (Object.keys(e2).length === 0) {
+      showToastMessage('Message sent! We\'ll get back to you soon.', 'success')
+      setForm({ name: '', email: '', subject: '', message: '' })
+    }
   }
 
   return (
-    <div style={{ minHeight: '100vh', paddingTop: '48px', paddingBottom: '64px' }}>
-      <div className="container">
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <h1 style={{ fontSize: '48px', fontWeight: 700, marginBottom: '16px', color: '#2D2D2D', textAlign: 'center' }}>
-            Get in Touch
-          </h1>
+    <div className="section" style={{ maxWidth: '900px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+        <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: '42px', fontWeight: 600, color: 'var(--ink)', marginBottom: '12px' }}>
+          Get in Touch
+        </h1>
+        <p style={{ fontSize: '17px', color: 'var(--text-light)' }}>
+          Questions or special requests? We'd love to hear from you.
+        </p>
+      </div>
 
-          <p style={{ fontSize: '18px', color: '#999999', textAlign: 'center', marginBottom: '64px' }}>
-            Have questions or special requests? We'd love to hear from you.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', marginBottom: '64px' }}>
-            {/* Contact Info */}
-            <div>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px', color: '#2D2D2D' }}>
-                Contact Information
-              </h2>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                <div>
-                  <h3 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D', textTransform: 'uppercase' }}>
-                    Email
-                  </h3>
-                  <a href="mailto:hello@crochetshop.com" style={{ fontSize: '16px', color: '#B8C5B5', textDecoration: 'none' }}>
-                    hello@crochetshop.com
-                  </a>
-                </div>
-
-                <div>
-                  <h3 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D', textTransform: 'uppercase' }}>
-                    Phone
-                  </h3>
-                  <a href="tel:+923001234567" style={{ fontSize: '16px', color: '#B8C5B5', textDecoration: 'none' }}>
-                    +92 300 123 4567
-                  </a>
-                </div>
-
-                <div>
-                  <h3 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D', textTransform: 'uppercase' }}>
-                    Address
-                  </h3>
-                  <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.6' }}>
-                    123 Craft Street<br />
-                    Karachi, Sindh<br />
-                    Pakistan
-                  </p>
-                </div>
-
-                <div>
-                  <h3 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D', textTransform: 'uppercase' }}>
-                    Hours
-                  </h3>
-                  <p style={{ fontSize: '16px', color: '#999999', lineHeight: '1.6' }}>
-                    Monday - Friday: 9 AM - 6 PM<br />
-                    Saturday: 10 AM - 4 PM<br />
-                    Sunday: Closed
-                  </p>
-                </div>
-
-                <div>
-                  <h3 style={{ fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D', textTransform: 'uppercase' }}>
-                    Follow Us
-                  </h3>
-                  <div style={{ display: 'flex', gap: '16px' }}>
-                    <a href="#" style={{ fontSize: '18px', color: '#B8C5B5', textDecoration: 'none' }}>f</a>
-                    <a href="#" style={{ fontSize: '18px', color: '#B8C5B5', textDecoration: 'none' }}>ig</a>
-                    <a href="#" style={{ fontSize: '18px', color: '#B8C5B5', textDecoration: 'none' }}>π</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D' }}>
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    {...register('name')}
-                    placeholder="Your name"
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      border: errors.name ? '2px solid #E74C3C' : '1px solid #D9D9D9',
-                      borderRadius: '6px',
-                      fontSize: '14px',
-                    }}
-                  />
-                  {errors.name && (
-                    <p style={{ fontSize: '12px', color: '#E74C3C', marginTop: '4px' }}>
-                      {errors.name.message}
-                    </p>
-                  )}
-                </div>
-
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D' }}>
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    {...register('email')}
-                    placeholder="your@email.com"
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      border: errors.email ? '2px solid #E74C3C' : '1px solid #D9D9D9',
-                      borderRadius: '6px',
-                      fontSize: '14px',
-                    }}
-                  />
-                  {errors.email && (
-                    <p style={{ fontSize: '12px', color: '#E74C3C', marginTop: '4px' }}>
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                <div style={{ marginBottom: '16px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D' }}>
-                    Subject
-                  </label>
-                  <input
-                    type="text"
-                    {...register('subject')}
-                    placeholder="How can we help?"
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      border: errors.subject ? '2px solid #E74C3C' : '1px solid #D9D9D9',
-                      borderRadius: '6px',
-                      fontSize: '14px',
-                    }}
-                  />
-                  {errors.subject && (
-                    <p style={{ fontSize: '12px', color: '#E74C3C', marginTop: '4px' }}>
-                      {errors.subject.message}
-                    </p>
-                  )}
-                </div>
-
-                <div style={{ marginBottom: '24px' }}>
-                  <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '8px', color: '#2D2D2D' }}>
-                    Message
-                  </label>
-                  <textarea
-                    {...register('message')}
-                    placeholder="Tell us more..."
-                    rows="6"
-                    style={{
-                      width: '100%',
-                      padding: '12px',
-                      border: errors.message ? '2px solid #E74C3C' : '1px solid #D9D9D9',
-                      borderRadius: '6px',
-                      fontSize: '14px',
-                      fontFamily: 'inherit',
-                      resize: 'vertical',
-                    }}
-                  />
-                  {errors.message && (
-                    <p style={{ fontSize: '12px', color: '#E74C3C', marginTop: '4px' }}>
-                      {errors.message.message}
-                    </p>
-                  )}
-                </div>
-
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '14px 24px',
-                    backgroundColor: '#B8C5B5',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '6px',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                  }}
-                >
-                  Send Message
-                </button>
-
-                {submitted && (
-                  <p style={{ marginTop: '16px', fontSize: '14px', color: '#27AE60', textAlign: 'center' }}>
-                    ✓ Message sent successfully!
-                  </p>
-                )}
-              </form>
-            </div>
+      <div className="contact-grid">
+        <div>
+          <h3 className="checkout-subheading" style={{ marginTop: 0 }}>Contact Information</h3>
+          <div className="contact-info-item">
+            <p className="label">Email</p>
+            <a href="mailto:hello@crochetshop.com">hello@crochetshop.com</a>
           </div>
-
-          {/* FAQ Section */}
-          <div style={{ backgroundColor: '#F8F8F7', padding: '48px', borderRadius: '8px' }}>
-            <h2 style={{ fontSize: '28px', fontWeight: 700, marginBottom: '32px', color: '#2D2D2D' }}>
-              Frequently Asked Questions
-            </h2>
-
-            <div style={{ display: 'grid', gap: '24px' }}>
-              {[
-                {
-                  q: 'How long does it take to receive my order?',
-                  a: 'In-stock items ship within 1-2 business days. Made-to-order items take 7-14 days. International shipping may take 2-3 weeks.',
-                },
-                {
-                  q: 'Do you offer customizations?',
-                  a: 'Yes! We offer custom orders for most items. Contact us with your specific requirements and we\'ll provide a quote.',
-                },
-                {
-                  q: 'What is your return policy?',
-                  a: 'We accept returns within 30 days of purchase if items are unused and in original condition. Custom items are non-refundable.',
-                },
-                {
-                  q: 'Are your products eco-friendly?',
-                  a: 'Yes! We use sustainable materials and eco-conscious packaging practices whenever possible.',
-                },
-              ].map((faq, idx) => (
-                <div key={idx} style={{ borderBottom: '1px solid #D9D9D9', paddingBottom: '24px' }}>
-                  <h3 style={{ fontSize: '16px', fontWeight: 700, marginBottom: '8px', color: '#2D2D2D' }}>
-                    {faq.q}
-                  </h3>
-                  <p style={{ fontSize: '14px', color: '#999999', lineHeight: '1.6' }}>
-                    {faq.a}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="contact-info-item">
+            <p className="label">Phone</p>
+            <a href="tel:+923001234567">+92 300 123 4567</a>
+          </div>
+          <div className="contact-info-item">
+            <p className="label">Hours</p>
+            <p className="value">Mon–Fri: 9 AM – 6 PM<br/>Sat: 10 AM – 4 PM</p>
           </div>
         </div>
+
+        <form onSubmit={handleSubmit} className="checkout-form-card">
+          <label>Name</label>
+          <input value={form.name} onChange={e => update('name', e.target.value)} className={errors.name ? 'field-error' : ''} />
+          {errors.name && <p className="field-error-msg">{errors.name}</p>}
+
+          <label>Email</label>
+          <input value={form.email} onChange={e => update('email', e.target.value)} className={errors.email ? 'field-error' : ''} />
+          {errors.email && <p className="field-error-msg">{errors.email}</p>}
+
+          <label>Subject</label>
+          <input value={form.subject} onChange={e => update('subject', e.target.value)} className={errors.subject ? 'field-error' : ''} />
+          {errors.subject && <p className="field-error-msg">{errors.subject}</p>}
+
+          <label>Message</label>
+          <textarea rows="5" value={form.message} onChange={e => update('message', e.target.value)} className={`review-textarea ${errors.message ? 'field-error' : ''}`} style={{ marginTop: '4px' }} />
+          {errors.message && <p className="field-error-msg">{errors.message}</p>}
+
+          <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '20px' }}>
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <div className="faq-block">
+        <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: '26px', fontWeight: 600, color: 'var(--ink)', marginBottom: '24px' }}>
+          Frequently Asked Questions
+        </h2>
+        {faqs.map((faq, idx) => (
+          <div key={idx} className="faq-item">
+            <button className="faq-question" onClick={() => setOpenFaq(openFaq === idx ? null : idx)}>
+              <span>{faq.q}</span>
+              <span>{openFaq === idx ? '−' : '+'}</span>
+            </button>
+            {openFaq === idx && <p className="faq-answer">{faq.a}</p>}
+          </div>
+        ))}
       </div>
     </div>
   )
