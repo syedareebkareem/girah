@@ -7,16 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#B8C5B5',
-        'primary-dark': '#A4B5A0',
-        accent: '#A59989',
-        'text-dark': '#2D2D2D',
-        'text-light': '#999999',
-        'bg-off': '#F8F8F7',
-        'border-light': '#D9D9D9',
+        cream: '#FBF3E7',
+        'cream-dark': '#F3E8D7',
+        ink: '#2B2118',
+        rust: '#C4592E',
+        'rust-dark': '#A8471F',
+        pine: '#3A5A40',
+        'pine-dark': '#2C4531',
+        mustard: '#E3A857',
+        blush: '#E8B4B8',
       },
       fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
+        display: ['Fraunces', 'serif'],
+        sans: ['Manrope', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'monospace'],
       },
     },
   },
