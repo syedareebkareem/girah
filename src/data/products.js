@@ -4,7 +4,7 @@ export const PRODUCTS = [
     name: 'Cozy Cream Blanket',
     price: 89.99,
     originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1577720643272-265ae65d1e24?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1693387369575-df25ef8424e7?w=400&h=400&fit=crop',
     category: 'blankets',
     rating: 4.8,
     reviews: 24,
@@ -52,7 +52,7 @@ export const PRODUCTS = [
     name: 'Boho Rainbow Scarf',
     price: 39.99,
     originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1590080876-0cd6deb56e18?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1693387347071-d3bf494cbe0e?w=400&h=400&fit=crop',
     category: 'scarves',
     rating: 4.6,
     reviews: 22,
@@ -88,7 +88,7 @@ export const PRODUCTS = [
     name: 'Lace Shawl',
     price: 65.99,
     originalPrice: null,
-    image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1693387359607-f48d0a824b1e?w=400&h=400&fit=crop',
     category: 'shawls',
     rating: 4.8,
     reviews: 14,
@@ -146,9 +146,9 @@ export const PRODUCTS = [
 ];
 
 export const CATEGORIES = [
-  { id: 1, name: 'Blankets & Throws', slug: 'blankets', image: 'https://images.unsplash.com/photo-1577720643272-265ae65d1e24?w=300&h=300&fit=crop' },
+  { id: 1, name: 'Blankets & Throws', slug: 'blankets', image: 'https://images.unsplash.com/photo-1693387369575-df25ef8424e7?w=300&h=300&fit=crop' },
   { id: 2, name: 'Amigurumi & Toys', slug: 'amigurumi', image: 'https://images.unsplash.com/photo-1578500494198-246f612d03b3?w=300&h=300&fit=crop' },
-  { id: 3, name: 'Home Décor', slug: 'home-decor', image: 'https://images.unsplash.com/photo-1584210566956-e409b84b3f4a?w=300&h=300&fit=crop' },
+  { id: 3, name: 'Home Decor', slug: 'home-decor', image: 'https://images.unsplash.com/photo-1584210566956-e409b84b3f4a?w=300&h=300&fit=crop' },
   { id: 4, name: 'Hats & Beanies', slug: 'hats', image: 'https://images.unsplash.com/photo-1576618124519-894a7b17587b?w=300&h=300&fit=crop' },
-  { id: 5, name: 'Scarves & Wraps', slug: 'scarves', image: 'https://images.unsplash.com/photo-1590080876-0cd6deb56e18?w=300&h=300&fit=crop' },
+  { id: 5, name: 'Scarves & Wraps', slug: 'scarves', image: 'https://images.unsplash.com/photo-1693387347071-d3bf494cbe0e?w=300&h=300&fit=crop' },
 ];

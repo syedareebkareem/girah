@@ -6,6 +6,7 @@ import ImageGallery from '../components/products/ImageGallery'
 import Breadcrumbs from '../components/common/Breadcrumbs'
 import QuantitySelector from '../components/common/QuantitySelector'
 import ProductCard from '../components/products/ProductCard'
+import ReviewSection from '../components/products/ReviewSection'
 
 export default function ProductDetail() {
   const { id } = useParams()
@@ -61,7 +62,7 @@ export default function ProductDetail() {
           ]}
         />
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', marginBottom: '80px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', marginBottom: '32px' }}>
           <ImageGallery images={images} />
 
           <div>
@@ -174,8 +175,10 @@ export default function ProductDetail() {
           </div>
         </div>
 
+        <ReviewSection productId={product.id} baseRating={product.rating} baseReviewCount={product.reviews} />
+
         {relatedProducts.length > 0 && (
-          <div>
+          <div style={{ marginTop: '64px' }}>
             <h2 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '32px', color: '#2D2D2D' }}>
               Related Products
             </h2>

@@ -7,6 +7,7 @@ import Pagination from '../components/common/Pagination'
 export default function Shop() {
   const [sortBy, setSortBy] = useState('newest')
   const [currentPage, setCurrentPage] = useState(1)
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [filters, setFilters] = useState({
     categories: [],
     priceRanges: [],
@@ -15,32 +16,24 @@ export default function Shop() {
 
   const itemsPerPage = 12
 
-  // Apply filters
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter(product => {
-      // Category filter
       if (filters.categories.length > 0 && !filters.categories.includes(product.category)) {
         return false
       }
-
-      // Price filter
       if (filters.priceRanges.length > 0) {
         const inPriceRange = filters.priceRanges.some(
           range => product.price >= range.min && product.price <= range.max
         )
         if (!inPriceRange) return false
       }
-
-      // Stock filter
       if (filters.stock.length > 0 && !filters.stock.includes(product.stock)) {
         return false
       }
-
       return true
     })
   }, [filters])
 
-  // Apply sorting
   const sortedProducts = useMemo(() => {
     const sorted = [...filteredProducts].sort((a, b) => {
       switch (sortBy) {
@@ -57,7 +50,6 @@ export default function Shop() {
     return sorted
   }, [filteredProducts, sortBy])
 
-  // Pagination
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage)
   const startIdx = (currentPage - 1) * itemsPerPage
   const paginatedProducts = sortedProducts.slice(startIdx, startIdx + itemsPerPage)
@@ -75,15 +67,33 @@ export default function Shop() {
   return (
     <div style={{ minHeight: '100vh', paddingTop: '48px', paddingBottom: '64px' }}>
       <div className="container">
-        <h1 style={{ fontSize: '36px', fontWeight: 700, marginBottom: '48px', color: '#2D2D2D' }}>
-          All Products
-        </h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '48px', flexWrap: 'wrap', gap: '16px' }}>
+          <h1 style={{ fontSize: '36px', fontWeight: 700, color: '#2D2D2D' }}>
+            All Products
+          </h1>
+          <button
+            onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)}
+            style={{
+              display: 'none',
+              padding: '10px 20px',
+              backgroundColor: '#F8F8F7',
+              border: '1px solid #D9D9D9',
+              borderRadius: '6px',
+              fontWeight: 600,
+              fontSize: '14px',
+              cursor: 'pointer',
+            }}
+            className="mobile-filter-toggle"
+          >
+            {mobileFiltersOpen ? 'Hide Filters' : 'Show Filters'}
+          </button>
+        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '48px' }}>
-          {/* Sidebar */}
-          <ProductFilters onFilterChange={handleFilterChange} activeFilters={filters} />
+        <div className="shop-layout" style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '48px' }}>
+          <div style={{ display: window.innerWidth <= 900 && !mobileFiltersOpen ? 'none' : 'block' }}>
+            <ProductFilters onFilterChange={handleFilterChange} activeFilters={filters} />
+          </div>
 
-          {/* Main Content */}
           <div>
             <div style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
               <p style={{ color: '#999999', fontSize: '14px' }}>
