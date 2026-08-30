@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { PRODUCTS } from '../data/products'
 import ProductCard from '../components/products/ProductCard'
 import ProductFilters from '../components/products/ProductFilters'
@@ -11,9 +12,23 @@ const PRICE_RANGES = {
 }
 
 export default function Shop() {
+  const [searchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+
   const [sortBy, setSortBy] = useState('newest')
-  const [filters, setFilters] = useState({ categories: [], priceRanges: [], stock: [] })
+  const [filters, setFilters] = useState({
+    categories: categoryParam ? [categoryParam] : [],
+    priceRanges: [],
+    stock: [],
+  })
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+
+  // Keep filters in sync if the ?category= param changes (e.g. clicking a different category card)
+  useEffect(() => {
+    if (categoryParam) {
+      setFilters(prev => ({ ...prev, categories: [categoryParam] }))
+    }
+  }, [categoryParam])
 
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter(p => {

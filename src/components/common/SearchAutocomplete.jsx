@@ -1,11 +1,10 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PRODUCTS } from '../../data/products'
 import { useSearch } from '../../context/SearchContext'
 
 export default function SearchAutocomplete({ onClose }) {
   const [query, setQuery] = useState('')
-  const [suggestions, setSuggestions] = useState([])
   const [showDropdown, setShowDropdown] = useState(false)
   const navigate = useNavigate()
   const { performSearch } = useSearch()
@@ -17,26 +16,26 @@ export default function SearchAutocomplete({ onClose }) {
     }
   }, [])
 
-  useEffect(() => {
-    if (query.trim().length > 0) {
-      const query_lower = query.toLowerCase()
-      const matches = PRODUCTS.filter(p =>
-        p.name.toLowerCase().includes(query_lower) ||
-        p.category.toLowerCase().includes(query_lower)
-      ).slice(0, 5)
-      setSuggestions(matches)
-      setShowDropdown(true)
-    } else {
-      setSuggestions([])
-      setShowDropdown(false)
-    }
+  const suggestions = useMemo(() => {
+    const trimmed = query.trim()
+    if (!trimmed) return []
+    const query_lower = trimmed.toLowerCase()
+    return PRODUCTS.filter(p =>
+      p.name.toLowerCase().includes(query_lower) ||
+      p.category.toLowerCase().includes(query_lower)
+    ).slice(0, 5)
   }, [query])
+
+  const handleQueryChange = (value) => {
+    setQuery(value)
+    setShowDropdown(value.trim().length > 0)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (query.trim()) {
       performSearch(query)
-      navigate('/search')
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`)
       setQuery('')
       setShowDropdown(false)
       onClose()
@@ -58,7 +57,7 @@ export default function SearchAutocomplete({ onClose }) {
           type="text"
           placeholder="Search products..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => handleQueryChange(e.target.value)}
           onFocus={() => query.trim() && setShowDropdown(true)}
           onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
           style={{

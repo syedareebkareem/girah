@@ -1,16 +1,30 @@
 import { useSearch } from '../context/SearchContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ProductCard from '../components/products/ProductCard'
 import Pagination from '../components/common/Pagination'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 export default function SearchResults() {
-  const { searchQuery, searchResults } = useSearch()
+  const { searchQuery, searchResults, performSearch } = useSearch()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 12
 
-  if (!searchQuery) {
+  const urlQuery = searchParams.get('q') || ''
+
+  // Re-run the search from the URL param on direct load or refresh,
+  // since SearchContext itself is in-memory only.
+  useEffect(() => {
+    if (urlQuery && urlQuery !== searchQuery) {
+      performSearch(urlQuery)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlQuery])
+
+  const effectiveQuery = searchQuery || urlQuery
+
+  if (!effectiveQuery) {
     return (
       <div className="not-found-block">
         <div style={{ textAlign: 'center' }}>
@@ -45,8 +59,8 @@ export default function SearchResults() {
         </h1>
         <p style={{ fontSize: '16px', color: 'var(--text-light)' }}>
           {searchResults.length === 0
-            ? `No results found for "${searchQuery}"`
-            : `Found ${searchResults.length} product${searchResults.length !== 1 ? 's' : ''} matching "${searchQuery}"`}
+            ? `No results found for "${effectiveQuery}"`
+            : `Found ${searchResults.length} product${searchResults.length !== 1 ? 's' : ''} matching "${effectiveQuery}"`}
         </p>
       </div>
 

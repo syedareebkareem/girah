@@ -34,7 +34,7 @@ export default function QuickViewModal({ product, onClose }) {
         onClick={(e) => e.stopPropagation()}
         style={{
           backgroundColor: 'white',
-          borderRadius: '8px',
+          borderRadius: '14px',
           maxWidth: '800px',
           width: '100%',
           maxHeight: '90vh',
@@ -52,7 +52,7 @@ export default function QuickViewModal({ product, onClose }) {
             border: 'none',
             fontSize: '24px',
             cursor: 'pointer',
-            color: '#2D2D2D',
+            color: 'var(--ink)',
             zIndex: 10,
             width: '36px',
             height: '36px',
@@ -60,7 +60,7 @@ export default function QuickViewModal({ product, onClose }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            boxShadow: '0 2px 8px rgba(43,33,24,0.1)',
           }}
         >
           ✕
@@ -74,78 +74,55 @@ export default function QuickViewModal({ product, onClose }) {
               width: '100%',
               aspectRatio: '1',
               objectFit: 'cover',
-              borderRadius: '8px',
+              borderRadius: '10px',
             }}
           />
 
           <div>
-            <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#2D2D2D', marginBottom: '12px' }}>
+            <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: '24px', fontWeight: 600, color: 'var(--ink)', marginBottom: '12px' }}>
               {product.name}
             </h2>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <span style={{ fontSize: '16px', color: '#FFD700' }}>
+              <span style={{ fontSize: '16px', color: 'var(--mustard)' }}>
                 {'★'.repeat(Math.floor(product.rating))}
               </span>
-              <span style={{ fontSize: '14px', color: '#999999' }}>
+              <span style={{ fontSize: '14px', color: 'var(--text-light)' }}>
                 ({product.reviews} reviews)
               </span>
             </div>
 
             <div style={{ marginBottom: '16px' }}>
-              <span style={{ fontSize: '28px', fontWeight: 700, color: '#2D2D2D' }}>
+              <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '28px', fontWeight: 700, color: 'var(--rust)' }}>
                 ${product.price.toFixed(2)}
               </span>
               {product.originalPrice && (
-                <span style={{ fontSize: '16px', color: '#999999', textDecoration: 'line-through', marginLeft: '12px' }}>
+                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '16px', color: 'var(--text-light)', textDecoration: 'line-through', marginLeft: '12px' }}>
                   ${product.originalPrice.toFixed(2)}
                 </span>
               )}
             </div>
 
-            <p style={{ fontSize: '14px', color: '#999999', lineHeight: '1.7', marginBottom: '24px' }}>
+            <p style={{ fontSize: '14px', color: 'var(--text-light)', lineHeight: '1.7', marginBottom: '24px' }}>
               {product.description}
             </p>
 
             <div style={{ marginBottom: '24px' }}>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '12px', color: '#2D2D2D' }}>
+              <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px', color: 'var(--ink)' }}>
                 Quantity
               </label>
               <QuantitySelector quantity={quantity} onChange={setQuantity} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button
-                onClick={handleAddToCart}
-                style={{
-                  padding: '14px 24px',
-                  backgroundColor: '#B8C5B5',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '6px',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer',
-                }}
-              >
+              <button onClick={handleAddToCart} className="btn btn-primary" style={{ width: '100%' }}>
                 Add to Cart
               </button>
               <Link
                 to={`/product/${product.id}`}
                 onClick={onClose}
-                style={{
-                  padding: '14px 24px',
-                  backgroundColor: 'transparent',
-                  color: '#B8C5B5',
-                  border: '2px solid #B8C5B5',
-                  borderRadius: '6px',
-                  fontWeight: 600,
-                  fontSize: '14px',
-                  textTransform: 'uppercase',
-                  textAlign: 'center',
-                  textDecoration: 'none',
-                }}
+                className="btn btn-secondary"
+                style={{ textAlign: 'center' }}
               >
                 View Full Details
               </Link>

@@ -150,5 +150,8 @@ export const CATEGORIES = [
   { id: 2, name: 'Amigurumi & Toys', slug: 'amigurumi', image: '/images/products/blanket-1.jpg' },
   { id: 3, name: 'Home Decor', slug: 'home-decor', image: '/images/products/blanket-1.jpg' },
   { id: 4, name: 'Hats & Beanies', slug: 'hats', image: '/images/products/blanket-1.jpg' },
-  { id: 5, name: 'Scarves & Wraps', slug: 'scarves', image: '/images/products/blanket-1.jpg' },
+  { id: 5, name: 'Scarves', slug: 'scarves', image: '/images/products/blanket-1.jpg' },
+  { id: 6, name: 'Bags & Totes', slug: 'bags', image: '/images/products/blanket-1.jpg' },
+  { id: 7, name: 'Baby Items', slug: 'baby-items', image: '/images/products/blanket-1.jpg' },
+  { id: 8, name: 'Shawls & Wraps', slug: 'shawls', image: '/images/products/blanket-1.jpg' },
 ];
