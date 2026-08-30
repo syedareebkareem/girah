@@ -94,11 +94,11 @@ export default function QuickViewModal({ product, onClose }) {
 
             <div style={{ marginBottom: '16px' }}>
               <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '28px', fontWeight: 700, color: 'var(--rust)' }}>
-                ${product.price.toFixed(2)}
+                Rs. {product.price.toLocaleString()}
               </span>
               {product.originalPrice && (
                 <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '16px', color: 'var(--text-light)', textDecoration: 'line-through', marginLeft: '12px' }}>
-                  ${product.originalPrice.toFixed(2)}
+                  Rs. {product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>

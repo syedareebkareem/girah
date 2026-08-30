@@ -127,7 +127,7 @@ export default function SearchAutocomplete({ onClose }) {
                   {product.name}
                 </p>
                 <p style={{ fontSize: '12px', color: 'var(--text-light)', fontFamily: 'IBM Plex Mono, monospace' }}>
-                  ${product.price.toFixed(2)}
+                  Rs. {product.price.toLocaleString()}
                 </p>
               </div>
             </div>

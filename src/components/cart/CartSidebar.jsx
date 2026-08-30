@@ -32,7 +32,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                 <img src={item.image} alt={item.name} onError={(e) => e.target.style.display = 'none'} />
                 <div className="cart-item-info">
                   <h4>{item.name}</h4>
-                  <p className="cart-item-price">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="cart-item-price">Rs. {(item.price * item.quantity).toLocaleString()}</p>
                   <div className="qty-selector qty-selector-sm">
                     <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>−</button>
                     <span>{item.quantity}</span>
@@ -49,7 +49,7 @@ export default function CartSidebar({ isOpen, onClose }) {
           <div className="cart-sidebar-footer">
             <div className="cart-subtotal-row">
               <span>Subtotal</span>
-              <span>${getTotalPrice().toFixed(2)}</span>
+              <span>Rs. {getTotalPrice().toLocaleString()}</span>
             </div>
             <p className="cart-shipping-note">Shipping calculated at checkout</p>
             <Link to="/cart" onClick={onClose} className="btn btn-secondary" style={{ display: 'block', textAlign: 'center', marginBottom: '10px' }}>

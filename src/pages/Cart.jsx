@@ -29,10 +29,10 @@ export default function Cart() {
               <img src={item.image} alt={item.name} onError={(e) => e.target.style.display = 'none'} />
               <div className="cart-page-info">
                 <h3>{item.name}</h3>
-                <p className="current">${item.price.toFixed(2)}</p>
+                <p className="current">Rs. {item.price.toLocaleString()}</p>
               </div>
               <QuantitySelector quantity={item.quantity} onChange={(qty) => updateQuantity(item.id, qty)} />
-              <p className="cart-page-line-total">${(item.price * item.quantity).toFixed(2)}</p>
+              <p className="cart-page-line-total">Rs. {(item.price * item.quantity).toLocaleString()}</p>
               <button className="cart-remove-btn" onClick={() => removeFromCart(item.id)}>✕</button>
             </div>
           ))}
@@ -42,7 +42,7 @@ export default function Cart() {
           <h3>Order Summary</h3>
           <div className="cart-subtotal-row">
             <span>Subtotal</span>
-            <span>${getTotalPrice().toFixed(2)}</span>
+            <span>Rs. {getTotalPrice().toLocaleString()}</span>
           </div>
           <div className="cart-subtotal-row">
             <span>Shipping</span>
@@ -50,7 +50,7 @@ export default function Cart() {
           </div>
           <div className="cart-total-row">
             <span>Total</span>
-            <span>${getTotalPrice().toFixed(2)}</span>
+            <span>Rs. {getTotalPrice().toLocaleString()}</span>
           </div>
           <button className="btn btn-primary" style={{ width: '100%', marginBottom: '10px' }} onClick={() => navigate('/checkout')}>
             Proceed to Checkout

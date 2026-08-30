@@ -83,7 +83,7 @@ export default function Account() {
                       Total
                     </p>
                     <p style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '18px', fontWeight: 700, color: 'var(--rust)' }}>
-                      ${order.total.toFixed(2)}
+                      Rs. {order.total.toLocaleString()}
                     </p>
                   </div>
                   <Link

@@ -28,7 +28,7 @@ export default function ProductDetail() {
   }
 
   const wishlisted = isInWishlist(product.id)
-  const images = [product.image, product.image, product.image, product.image]
+  const images = product.images ?? [product.image, product.image, product.image, product.image]
   const relatedProducts = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
 
   const handleAddToCart = () => {
@@ -59,9 +59,9 @@ export default function ProductDetail() {
           </div>
 
           <div className="product-detail-price">
-            <span className="current">${product.price.toFixed(2)}</span>
+            <span className="current">Rs. {product.price.toLocaleString()}</span>
             {product.originalPrice && (
-              <span className="original">${product.originalPrice.toFixed(2)}</span>
+              <span className="original">Rs. {product.originalPrice.toLocaleString()}</span>
             )}
           </div>
 

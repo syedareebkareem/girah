@@ -7,10 +7,10 @@ export default function ProductFilters({ filters, onChange }) {
   ]
 
   const priceRanges = [
-    { id: '0-25', label: 'Under $25', min: 0, max: 25 },
-    { id: '25-50', label: '$25 – $50', min: 25, max: 50 },
-    { id: '50-100', label: '$50 – $100', min: 50, max: 100 },
-    { id: '100-plus', label: '$100+', min: 100, max: Infinity },
+    { id: '0-1500', label: 'Under Rs. 1,500', min: 0, max: 1500 },
+    { id: '1500-3000', label: 'Rs. 1,500 – Rs. 3,000', min: 1500, max: 3000 },
+    { id: '3000-5000', label: 'Rs. 3,000 – Rs. 5,000', min: 3000, max: 5000 },
+    { id: '5000-plus', label: 'Rs. 5,000+', min: 5000, max: Infinity },
   ]
 
   const toggleCategory = (slug) => {

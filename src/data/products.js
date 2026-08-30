@@ -2,7 +2,7 @@ export const PRODUCTS = [
   {
     id: 1,
     name: 'Cozy Cream Blanket',
-    price: 89.99,
+    price: 6500,
     originalPrice: null,
     image: '/images/products/blankets/blanket-cream-yarn.jpg',
     images: [
@@ -19,8 +19,8 @@ export const PRODUCTS = [
   {
     id: 2,
     name: 'Pink Amigurumi Bunny',
-    price: 45.99,
-    originalPrice: 55.99,
+    price: 2400,
+    originalPrice: 3000,
     image: '/images/products/amigurumi/bunny-yellow-scarf.jpg',
     images: [
       '/images/products/amigurumi/bunny-yellow-scarf.jpg',
@@ -35,7 +35,7 @@ export const PRODUCTS = [
   {
     id: 3,
     name: 'Sage Green Pillow Cover',
-    price: 35.99,
+    price: 1800,
     originalPrice: null,
     image: '/images/products/home-decor/cushion-crochet-pattern.jpg',
     images: [
@@ -51,7 +51,7 @@ export const PRODUCTS = [
   {
     id: 4,
     name: 'Warm Winter Beanie',
-    price: 28.99,
+    price: 1200,
     originalPrice: null,
     image: '/images/products/hats/beanie-gray.jpg',
     images: [
@@ -68,7 +68,7 @@ export const PRODUCTS = [
   {
     id: 5,
     name: 'Boho Rainbow Scarf',
-    price: 39.99,
+    price: 1600,
     originalPrice: null,
     image: '/images/products/scarves/scarf-multicolor.jpg',
     images: [
@@ -84,7 +84,7 @@ export const PRODUCTS = [
   {
     id: 6,
     name: 'Cream Tote Bag',
-    price: 52.99,
+    price: 2600,
     originalPrice: null,
     image: '/images/products/bags/tote-crochet-floral.jpg',
     images: [
@@ -101,7 +101,7 @@ export const PRODUCTS = [
   {
     id: 7,
     name: 'Baby Blue Booties',
-    price: 22.99,
+    price: 1000,
     originalPrice: null,
     image: '/images/products/baby-items/booties-pink-knit.jpg',
     images: [
@@ -117,7 +117,7 @@ export const PRODUCTS = [
   {
     id: 8,
     name: 'Lace Shawl',
-    price: 65.99,
+    price: 3200,
     originalPrice: null,
     image: '/images/products/shawls/shawl-white-lace.jpg',
     images: [
@@ -134,8 +134,8 @@ export const PRODUCTS = [
   {
     id: 9,
     name: 'Multicolor Throw Blanket',
-    price: 79.99,
-    originalPrice: 99.99,
+    price: 5800,
+    originalPrice: 7200,
     image: '/images/products/blankets/blanket-multicolor.jpg',
     images: [
       '/images/products/blankets/blanket-multicolor.jpg',
@@ -151,7 +151,7 @@ export const PRODUCTS = [
   {
     id: 10,
     name: 'Gray Amigurumi Cat',
-    price: 38.99,
+    price: 2200,
     originalPrice: null,
     image: '/images/products/amigurumi/rabbit-gray-crochet.jpg',
     images: [
@@ -167,7 +167,7 @@ export const PRODUCTS = [
   {
     id: 11,
     name: 'Taupe Cushion Set',
-    price: 95.99,
+    price: 3500,
     originalPrice: null,
     image: '/images/products/home-decor/cushion-crochet-pattern.jpg',
     images: [
@@ -183,7 +183,7 @@ export const PRODUCTS = [
   {
     id: 12,
     name: 'Baby Blanket Set',
-    price: 58.99,
+    price: 3000,
     originalPrice: null,
     image: '/images/products/baby-items/blanket-blue-white.jpg',
     images: [
