@@ -674,7 +674,7 @@ button {
 .qty-selector { display: inline-flex; align-items: center; gap: 4px; background: var(--cream-dark); border-radius: 100px; padding: 6px; width: fit-content; }
 .qty-selector button { width: 32px; height: 32px; border-radius: 50%; background: white; font-size: 16px; color: var(--ink); }
 .qty-selector button:hover { background: var(--rust); color: white; }
-.qty-selector input { width: 44px; text-align: center; background: transparent; font-weight: 700; color: var(--ink); font-size: 14px; }
+.qty-selector input { width: 44px; text-align: center; background: transparent; border: none; outline: none; font-weight: 700; color: var(--ink); font-size: 14px; }
 .qty-label { display: block; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink); margin-bottom: 12px; }
 
 .gallery-main { margin-bottom: 16px; border-radius: 14px; overflow: hidden; cursor: zoom-in; aspect-ratio: 1; background: var(--cream-dark); }
